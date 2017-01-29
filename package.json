@@ -1,0 +1,11 @@
+{
+  "name": "level",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "test": "node tests/test"
+  },
+  "author": "slacktracer",
+  "license": "MIT"
+}
