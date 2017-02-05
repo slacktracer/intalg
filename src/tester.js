@@ -1,7 +1,12 @@
 const about = {
   equal: { hit: true, name: 'equal', symbol: '<-------<\n<-------<' },
   cover: { hit: true, name: 'cover', symbol: '<---------<\n <-------< ' },
-  coverLeft: { hit: true, name: 'coverLeft', symbol: '<---------<\n<--------< ' },
+  coverLeft: {
+    hit: true,
+    name: 'coverLeft',
+    symbol: '<---------<\n<--------< ',
+    dummy: true
+  },
   coverRight: {
     hit: true,
     name: 'coverRight',
@@ -78,7 +83,7 @@ const tests = {
 
 const names = Object.keys(tests)
 
-module.exports = function test(interval, segment) {
+export default function test(interval, segment) {
   let conflict = false
   names.some(name => {
     const hit = tests[name](interval, segment)

@@ -1,10 +1,10 @@
-const { copy, markRuler, unmarkRuler } = require('./helpers')
-const test = require('./tester')
-const solve = require('./solver')
-const apply = require('./applier')
-const weld = require('./welder')
+import { copy, markRuler, unmarkRuler } from './helpers'
+import apply from './applier'
+import solve from './solver'
+import test from './tester'
+import weld from './welder'
 
-module.exports = function ranger(__intervals__, __ruler__) {
+export default function ranger(__intervals__, __ruler__) {
   let ruler = markRuler(__ruler__)
 
   if (__intervals__.length === 0) {
@@ -18,7 +18,7 @@ module.exports = function ranger(__intervals__, __ruler__) {
   const interval = intervals.shift()
 
   let conflict
-  ruler.some((segment) => {
+  ruler.some(segment => {
     conflict = test(interval, segment)
     return conflict
   })

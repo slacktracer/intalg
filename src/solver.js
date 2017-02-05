@@ -1,6 +1,6 @@
-const { makeInterval } = require('./helpers')
+import { makeInterval } from './helpers'
 
-module.exports = function solve(conflict) {
+export default function solve(conflict) {
   const { interval, name, segment, typeMismatch } = conflict
   const solution = { create: [], insert: [], removeSegment: false }
 

@@ -1,6 +1,6 @@
-const { copy } = require('./helpers')
+import { copy } from './helpers'
 
-module.exports = function apply(__solution__, __ruler__) {
+export default function apply(__solution__, __ruler__) {
   if (__solution__.insert.length === 0) return __ruler__
 
   const solution = copy(__solution__)

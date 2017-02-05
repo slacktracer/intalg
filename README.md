@@ -1,5 +1,4 @@
-# level
-It's like a flat interval tree! (What?)
+It's like a flat interval tree! (_What?_)
 
 ## "SHOW ME WHAT YOU GOT!"
 

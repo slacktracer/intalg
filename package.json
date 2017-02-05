@@ -2,10 +2,27 @@
   "name": "intalg",
   "version": "0.1.0",
   "description": "",
-  "main": "main.js",
-  "scripts": {
-    "test": "node tests/test"
-  },
+  "main": "dist/main.js",
   "author": "slacktracer",
-  "license": "MIT"
+  "license": "MIT",
+  "devDependencies": {
+    "ava": "^0.18.1",
+    "babel-cli": "^6.2.0",
+    "babel-polyfill": "^6.3.14",
+    "babel-preset-node7": "^1.5.0"
+  },
+  "dependencies": {
+    "babel-polyfill": "^6.2.0",
+    "source-map-support": "^0.4.0"
+  },
+  "scripts": {
+    "build": "babel src --out-dir dist --source-maps",
+    "watch": "babel src --out-dir dist --source-maps --watch",
+    "test": "ava dist/tests/main.js --verbose"
+  },
+  "babel": {
+    "presets": [
+      "node7"
+    ]
+  }
 }
