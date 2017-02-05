@@ -46,48 +46,72 @@ const about = {
 }
 
 const tests = {
-  equal(interval, segment) {
+  equal (interval, segment) {
+
     return interval.begin === segment.begin && interval.end === segment.end
+
   },
-  cover(interval, segment) {
+  cover (interval, segment) {
+
     return interval.begin < segment.begin && interval.end > segment.end
+
   },
-  coverLeft(interval, segment) {
+  coverLeft (interval, segment) {
+
     return interval.begin === segment.begin && interval.end > segment.end
+
   },
-  coverRight(interval, segment) {
+  coverRight (interval, segment) {
+
     return interval.begin < segment.begin && interval.end === segment.end
+
   },
-  inside(interval, segment) {
+  inside (interval, segment) {
+
     return interval.begin > segment.begin && interval.end < segment.end
+
   },
-  insideLeft(interval, segment) {
+  insideLeft (interval, segment) {
+
     return interval.begin === segment.begin && interval.end < segment.end
+
   },
-  insideRight(interval, segment) {
+  insideRight (interval, segment) {
+
     return interval.begin > segment.begin && interval.end === segment.end
+
   },
-  overlapLeft(interval, segment) {
+  overlapLeft (interval, segment) {
+
     return interval.begin < segment.begin &&
       interval.end > segment.begin &&
       interval.end < segment.end &&
       interval.end > segment.begin
+
   },
-  overlapRight(interval, segment) {
+  overlapRight (interval, segment) {
+
     return interval.begin > segment.begin &&
       interval.end > segment.end &&
       interval.begin < segment.end &&
       interval.end > segment.end
+
   }
 }
 
 const names = Object.keys(tests)
 
-export default function test(interval, segment) {
+export default function test (obj) {
+
+  const interval = JSON.parse(JSON.stringify(obj.interval))
+  const segment = JSON.parse(JSON.stringify(obj.segment))
+
   let conflict = false
-  names.some(name => {
+  names.some(function (name) {
+
     const hit = tests[name](interval, segment)
     if (hit) {
+
       conflict = {
         interval,
         name,
@@ -95,8 +119,11 @@ export default function test(interval, segment) {
         typeMismatch: interval.type !== segment.type,
         about: about[name]
       }
+
     }
     return hit
+
   })
   return conflict
+
 }

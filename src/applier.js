@@ -1,20 +1,26 @@
-import { copy } from './helpers'
+import process from './processor'
 
-export default function apply(__solution__, __ruler__) {
-  if (__solution__.insert.length === 0) return __ruler__
+export default function apply (obj) {
 
-  const solution = copy(__solution__)
-  const ruler = copy(__ruler__)
+  if (obj.solution.insert.length === 0) return obj.ruler
 
-  const segmentIndex = ruler.findIndex(
-    segment => segment.id === solution.removeSegment
-  )
+  const solution = JSON.parse(JSON.stringify(obj.solution))
+  const ruler = process(obj.ruler, true)
+
+  const segmentIndex = ruler.findIndex(function (segment) {
+
+    return segment.id === solution.removeSegment
+
+  })
 
   if (segmentIndex > -1) {
+
     ruler.splice(segmentIndex, 1)
+
   }
 
   ruler.push(...solution.insert)
 
   return ruler
+
 }

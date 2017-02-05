@@ -1,27 +1,34 @@
-import { makeInterval } from './helpers'
+import makeInterval from './intervalMaker'
 
-export default function solve(conflict) {
+export default function solve (conflict) {
+
   const { interval, name, segment, typeMismatch } = conflict
   const solution = { create: [], insert: [], removeSegment: false }
 
   if (typeMismatch) {
+
     solution.removeSegment = segment.id
+
   }
 
   switch (name) {
     case 'equal':
       if (typeMismatch) {
+
         solution.insert.push(
           makeInterval(interval.begin, interval.end, interval.type)
         )
+
       }
       break
 
     case 'cover':
       if (typeMismatch) {
+
         solution.insert.push(
           makeInterval(segment.begin, segment.end, interval.type)
         )
+
       }
       solution.create.push(
         makeInterval(interval.begin, segment.begin, interval.type),
@@ -31,9 +38,11 @@ export default function solve(conflict) {
 
     case 'coverLeft':
       if (typeMismatch) {
+
         solution.insert.push(
           makeInterval(interval.begin, segment.end, interval.type)
         )
+
       }
       solution.create.push(
         makeInterval(segment.end, interval.end, interval.type)
@@ -42,9 +51,11 @@ export default function solve(conflict) {
 
     case 'coverRight':
       if (typeMismatch) {
+
         solution.insert.push(
           makeInterval(segment.begin, interval.end, interval.type)
         )
+
       }
       solution.create.push(
         makeInterval(interval.begin, segment.begin, interval.type)
@@ -53,6 +64,7 @@ export default function solve(conflict) {
 
     case 'inside':
       if (typeMismatch) {
+
         solution.insert.push(
           makeInterval(interval.begin, interval.end, interval.type)
         )
@@ -60,39 +72,46 @@ export default function solve(conflict) {
           makeInterval(segment.begin, interval.begin, segment.type),
           makeInterval(interval.end, segment.end, segment.type)
         )
+
       }
       break
 
     case 'insideLeft':
       if (typeMismatch) {
+
         solution.insert.push(
           makeInterval(interval.begin, interval.end, interval.type)
         )
         solution.create.push(
           makeInterval(interval.end, segment.end, segment.type)
         )
+
       }
       break
 
     case 'insideRight':
       if (typeMismatch) {
+
         solution.insert.push(
           makeInterval(interval.begin, interval.end, interval.type)
         )
         solution.create.push(
           makeInterval(segment.begin, interval.begin, segment.type)
         )
+
       }
       break
 
     case 'overlapLeft':
       if (typeMismatch) {
+
         solution.insert.push(
           makeInterval(segment.begin, interval.end, interval.type)
         )
         solution.create.push(
           makeInterval(interval.end, segment.end, segment.type)
         )
+
       }
       solution.create.push(
         makeInterval(interval.begin, segment.begin, interval.type)
@@ -101,12 +120,14 @@ export default function solve(conflict) {
 
     case 'overlapRight':
       if (typeMismatch) {
+
         solution.insert.push(
           makeInterval(interval.begin, segment.end, interval.type)
         )
         solution.create.push(
           makeInterval(segment.begin, interval.begin, segment.type)
         )
+
       }
       solution.create.push(
         makeInterval(segment.end, interval.end, interval.type)
@@ -118,4 +139,5 @@ export default function solve(conflict) {
   }
 
   return solution
+
 }
