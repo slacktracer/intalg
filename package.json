@@ -1,6 +1,6 @@
 {
   "name": "intalg",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "description": "",
   "main": "dist/umd/intalg.js",
   "author": "slacktracer",
