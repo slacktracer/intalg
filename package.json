@@ -2,7 +2,7 @@
   "name": "intalg",
   "version": "0.5.0",
   "description": "",
-  "main": "dist/cjs/main.js",
+  "main": "dist/umd/intalg.js",
   "author": "slacktracer",
   "license": "MIT",
   "devDependencies": {
