@@ -1,35 +1,25 @@
 {
   "name": "intalg",
-  "version": "0.4.0",
+  "version": "0.5.0",
   "description": "",
-  "main": "dist/main.js",
+  "main": "dist/cjs/main.js",
   "author": "slacktracer",
   "license": "MIT",
   "devDependencies": {
     "ava": "^0.18.1",
-    "babel-cli": "^6.2.0",
-    "babel-polyfill": "^6.3.14",
-    "babel-preset-env": "^1.1.8"
+    "babel-cli": "^6.23.0",
+    "babel-preset-env": "^1.1.8",
+    "gulp": "^3.9.1",
+    "gulp-babel": "^6.1.2",
+    "gulp-rename": "^1.2.2",
+    "gulp-sourcemaps": "^2.4.1",
+    "rollup": "^0.41.4",
+    "rollup-stream": "^1.19.0",
+    "vinyl-buffer": "^1.0.0",
+    "vinyl-source-stream": "^1.1.0"
   },
-  "dependencies": {
-    "babel-polyfill": "^6.2.0",
-    "source-map-support": "^0.4.0"
-  },
+  "dependencies": {},
   "scripts": {
-    "build": "babel src --out-dir dist --source-maps",
-    "watch": "babel src --out-dir dist --source-maps --watch",
-    "test": "ava dist/tests/main.js --verbose"
-  },
-  "babel": {
-    "presets": [
-      [
-        "env",
-        {
-          "targets": {
-            "node": "current"
-          }
-        }
-      ]
-    ]
+    "test": "ava tests/main.js --verbose"
   }
 }
