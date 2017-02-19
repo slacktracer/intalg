@@ -1,6 +1,6 @@
 {
   "name": "intalg",
-  "version": "0.8.0",
+  "version": "0.8.1",
   "description": "",
   "main": "dist/intalg.js",
   "author": "slacktracer",
@@ -23,6 +23,7 @@
   },
   "dependencies": {},
   "scripts": {
+    "build": "gulp",
     "test": "ava tests/main.js --verbose"
   }
 }
