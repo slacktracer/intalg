@@ -5,11 +5,10 @@ module.exports = {
   rules: {
     'array-bracket-spacing': [ 'error', 'always' ],
     'comma-dangle': [ 'error', 'never' ],
-    indent: [ 'error', 2, { SwitchCase: 1 } ],
+    indent: [ 'error', 2, { SwitchCase: 0 } ],
     'max-len': [ 'error', 80 ],
     'object-curly-spacing': [ 'error', 'always' ],
     'padded-blocks': [ 'error', 'always' ],
-    semi: [ 'error', 'never' ],
     'space-before-function-paren': [ 'error', 'always' ]
   }
-}
+};

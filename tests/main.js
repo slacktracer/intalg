@@ -59,7 +59,7 @@ const data = {
   }
 }
 
-import intalg from '../dist/cjs/intalg'
+import intalg from '../dist/intalg'
 import test from 'ava'
 
 test('equal', t => {

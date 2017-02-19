@@ -1,9 +1,14 @@
 {
-  "presets": [
-    ["env", {
-      "targets": {
-        "node": "current"
-      }
-    }]
-  ]
+	"plugins": [
+		"external-helpers"
+	],
+	"presets": [
+		[
+			"env",
+			{
+				"modules": false,
+				"targets": { "browsers": [ "last 2 versions", "safari >= 7" ] }
+			}
+		]
+	]
 }

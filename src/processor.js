@@ -2,20 +2,20 @@ export default function process (array, identify) {
 
   return array.map(function (item, index) {
 
-    const processedItem = { begin: item.begin, end: item.end, type: item.type }
+    const processedItem = { begin: item.begin, end: item.end, type: item.type };
 
     if (identify) {
 
-      processedItem.id = index
+      processedItem.id = index;
 
     } else {
 
-      delete processedItem.id
+      delete processedItem.id;
 
     }
 
-    return processedItem
+    return processedItem;
 
-  })
+  });
 
 }
