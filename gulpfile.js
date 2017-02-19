@@ -5,10 +5,8 @@ const gulp = require('gulp');
 const nodeResolve = require('rollup-plugin-node-resolve');
 const sourcemaps = require('gulp-sourcemaps');
 const rename = require('gulp-rename');
-const { rollup } = require('rollup');
-
 const uglify = require('gulp-uglify');
-const pump = require('pump');
+const { rollup } = require('rollup');
 
 let cache;
 

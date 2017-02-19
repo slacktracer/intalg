@@ -6,6 +6,8 @@ import weld from './welder';
 
 export default function intalg (obj) {
 
+  const conflicts = obj.conflicts || [];
+
   const intervals = process(obj.intervals);
   let ruler = process(obj.ruler, true);
 
@@ -17,7 +19,7 @@ export default function intalg (obj) {
 
     });
 
-    return process(weld({ ruler }));
+    return { ruler: process(weld({ ruler })), conflicts };
 
   }
 
@@ -27,6 +29,11 @@ export default function intalg (obj) {
   ruler.some(function (segment) {
 
     conflict = test({ interval, segment });
+    if (conflict) {
+
+      conflicts.push(conflict);
+
+    }
     return conflict;
 
   });
@@ -43,6 +50,6 @@ export default function intalg (obj) {
 
   }
 
-  return intalg({ intervals, ruler });
+  return intalg({ intervals, ruler, conflicts });
 
 }

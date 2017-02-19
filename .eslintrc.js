@@ -5,6 +5,7 @@ module.exports = {
   rules: {
     'array-bracket-spacing': [ 'error', 'always' ],
     'comma-dangle': [ 'error', 'never' ],
+    curly: 'error',
     indent: [ 'error', 2, { SwitchCase: 0 } ],
     'max-len': [ 'error', 80 ],
     'object-curly-spacing': [ 'error', 'always' ],
