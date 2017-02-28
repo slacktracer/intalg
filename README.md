@@ -1,3 +1,5 @@
+It's like a flat interval tree! (_What?_)
+
 #### UPDATE (2017-02-28):
 
 - Added type preservation. Selected types won't be touched.
@@ -74,7 +76,6 @@ TODO:
 
 ___
 
-It's like a flat interval tree! (_What?_)
 
 ## "SHOW ME WHAT YOU GOT!"
 
