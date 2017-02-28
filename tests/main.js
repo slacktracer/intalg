@@ -55,21 +55,24 @@ const data = {
   overlapRight: {
     intervals: [ { begin: 4, end: 20, type: 2 } ],
     ruler: [ { begin: 1, end: 11, type: 0 } ],
-    expectedResult: [ { begin: 1, end: 4, type: 0 }, { begin: 4, end: 20, type: 2 } ]
+    expectedResult: [
+      { begin: 1, end: 4, type: 0 },
+      { begin: 4, end: 20, type: 2 }
+    ]
   }
 };
 
 import intalg from '../dist/intalg';
 import test from 'ava';
 
-test('equal', t => {
+test('solve for equal', t => {
 
   const { expectedResult, intervals, ruler } = data.equal;
   const { ruler: result } = intalg({ intervals, ruler });
   t.deepEqual(result, expectedResult, 'equal is not working');
 
 });
-test('cover', t => {
+test('solve for cover', t => {
 
   const { expectedResult, intervals, ruler } = data.cover;
   const { ruler: result } = intalg({ intervals, ruler });
@@ -77,7 +80,7 @@ test('cover', t => {
 
 });
 
-test('coverLeft', t => {
+test('solve for coverLeft', t => {
 
   const { expectedResult, intervals, ruler } = data.coverLeft;
   const { ruler: result } = intalg({ intervals, ruler });
@@ -85,7 +88,7 @@ test('coverLeft', t => {
 
 });
 
-test('coverRight', t => {
+test('solve for coverRight', t => {
 
   const { expectedResult, intervals, ruler } = data.coverRight;
   const { ruler: result } = intalg({ intervals, ruler });
@@ -93,7 +96,7 @@ test('coverRight', t => {
 
 });
 
-test('inside', t => {
+test('solve for inside', t => {
 
   const { expectedResult, intervals, ruler } = data.inside;
   const { ruler: result } = intalg({ intervals, ruler });
@@ -101,7 +104,7 @@ test('inside', t => {
 
 });
 
-test('insideLeft', t => {
+test('solve for insideLeft', t => {
 
   const { expectedResult, intervals, ruler } = data.insideLeft;
   const { ruler: result } = intalg({ intervals, ruler });
@@ -109,7 +112,7 @@ test('insideLeft', t => {
 
 });
 
-test('insideRight', t => {
+test('solve for insideRight', t => {
 
   const { expectedResult, intervals, ruler } = data.insideRight;
   const { ruler: result } = intalg({ intervals, ruler });
@@ -117,7 +120,7 @@ test('insideRight', t => {
 
 });
 
-test('overlapLeft', t => {
+test('solve for overlapLeft', t => {
 
   const { expectedResult, intervals, ruler } = data.overlapLeft;
   const { ruler: result } = intalg({ intervals, ruler });
@@ -125,10 +128,63 @@ test('overlapLeft', t => {
 
 });
 
-test('overlapRight', t => {
+test('solve for overlapRight', t => {
 
   const { expectedResult, intervals, ruler } = data.overlapRight;
   const { ruler: result } = intalg({ intervals, ruler });
   t.deepEqual(result, expectedResult, 'overlapRight is not working');
+
+});
+
+test('preserve type', t => {
+
+  const ruler = [
+    { begin: 1, end: 15, type: 'free' },
+    { begin: 20, end: 30, type: 'preserved' },
+    { begin: 30, end: 40, type: 'free' },
+    { begin: 40, end: 45, type: 'free' }
+  ];
+
+  const intervals = [ { begin: 13, end: 33, type: 'used' } ];
+
+  const expectedResult = [
+    { begin: 1, end: 13, type: 'free' },
+    { begin: 13, end: 20, type: 'used' },
+    { begin: 20, end: 30, type: 'preserved' },
+    { begin: 30, end: 33, type: 'used' },
+    { begin: 33, end: 45, type: 'free' }
+  ];
+
+  const { ruler: result } = intalg({
+    intervals,
+    ruler,
+    preserve: [ 'preserved' ]
+  });
+  t.deepEqual(result, expectedResult, 'preserving type is not working');
+
+});
+
+test('fail on type', t => {
+
+  const ruler = [
+    { begin: 1, end: 15, type: 'free' },
+    { begin: 20, end: 30, type: 'used' },
+    { begin: 30, end: 40, type: 'free' },
+    { begin: 40, end: 45, type: 'free' }
+  ];
+
+  const intervals = [ { begin: 13, end: 33, type: 'some other type' } ];
+
+  const error = t.throws(function () {
+
+    intalg({
+      intervals,
+      ruler,
+      fail: [ 'used' ]
+    });
+
+  });
+
+  t.is(error.message, 'Failed on used!');
 
 });

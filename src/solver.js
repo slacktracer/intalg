@@ -1,11 +1,18 @@
 import makeInterval from './intervalMaker';
 
-export default function solve (conflict) {
+export default function solve (conflict, preserve) {
 
   const { interval, name, segment, typeMismatch } = conflict;
+
   const solution = { create: [], insert: [], removeSegment: false };
 
-  if (typeMismatch) {
+  const create = makeCreateFunction(solution.create);
+
+  const unprotectedType = !preserve.includes(segment.type);
+
+  const insert = makeInsertFunction(solution.insert, unprotectedType);
+
+  if (typeMismatch && unprotectedType) {
 
     solution.removeSegment = segment.id;
 
@@ -15,129 +22,139 @@ export default function solve (conflict) {
   case 'equal':
     if (typeMismatch) {
 
-      solution.insert.push(
-          makeInterval(interval.begin, interval.end, interval.type)
-        );
+      insert(makeInterval(interval.begin, interval.end, interval.type));
 
     }
+
     break;
 
   case 'cover':
     if (typeMismatch) {
 
-      solution.insert.push(
-          makeInterval(segment.begin, segment.end, interval.type)
-        );
+      insert(makeInterval(segment.begin, segment.end, interval.type));
 
     }
-    solution.create.push(
+
+    create(
         makeInterval(interval.begin, segment.begin, interval.type),
         makeInterval(segment.end, interval.end, interval.type)
       );
+
     break;
 
   case 'coverLeft':
     if (typeMismatch) {
 
-      solution.insert.push(
-          makeInterval(interval.begin, segment.end, interval.type)
-        );
+      insert(makeInterval(interval.begin, segment.end, interval.type));
 
     }
-    solution.create.push(
-        makeInterval(segment.end, interval.end, interval.type)
-      );
+
+    create(makeInterval(segment.end, interval.end, interval.type));
+
     break;
 
   case 'coverRight':
     if (typeMismatch) {
 
-      solution.insert.push(
-          makeInterval(segment.begin, interval.end, interval.type)
-        );
+      insert(makeInterval(segment.begin, interval.end, interval.type));
 
     }
-    solution.create.push(
-        makeInterval(interval.begin, segment.begin, interval.type)
-      );
+
+    create(makeInterval(interval.begin, segment.begin, interval.type));
+
     break;
 
   case 'inside':
     if (typeMismatch) {
 
-      solution.insert.push(
-          makeInterval(interval.begin, interval.end, interval.type)
-        );
-      solution.create.push(
+      insert(makeInterval(interval.begin, interval.end, interval.type));
+
+      create(
           makeInterval(segment.begin, interval.begin, segment.type),
           makeInterval(interval.end, segment.end, segment.type)
         );
 
     }
+
     break;
 
   case 'insideLeft':
     if (typeMismatch) {
 
-      solution.insert.push(
-          makeInterval(interval.begin, interval.end, interval.type)
-        );
-      solution.create.push(
-          makeInterval(interval.end, segment.end, segment.type)
-        );
+      insert(makeInterval(interval.begin, interval.end, interval.type));
+
+      create(makeInterval(interval.end, segment.end, segment.type));
 
     }
+
     break;
 
   case 'insideRight':
     if (typeMismatch) {
 
-      solution.insert.push(
-          makeInterval(interval.begin, interval.end, interval.type)
-        );
-      solution.create.push(
-          makeInterval(segment.begin, interval.begin, segment.type)
-        );
+      insert(makeInterval(interval.begin, interval.end, interval.type));
+
+      create(makeInterval(segment.begin, interval.begin, segment.type));
 
     }
+
     break;
 
   case 'overlapLeft':
     if (typeMismatch) {
 
-      solution.insert.push(
-          makeInterval(segment.begin, interval.end, interval.type)
-        );
-      solution.create.push(
-          makeInterval(interval.end, segment.end, segment.type)
-        );
+      insert(makeInterval(segment.begin, interval.end, interval.type));
+
+      create(makeInterval(interval.end, segment.end, segment.type));
 
     }
-    solution.create.push(
-        makeInterval(interval.begin, segment.begin, interval.type)
-      );
+
+    create(makeInterval(interval.begin, segment.begin, interval.type));
+
     break;
 
   case 'overlapRight':
     if (typeMismatch) {
 
-      solution.insert.push(
-          makeInterval(interval.begin, segment.end, interval.type)
-        );
-      solution.create.push(
-          makeInterval(segment.begin, interval.begin, segment.type)
-        );
+      insert(makeInterval(interval.begin, segment.end, interval.type));
+
+      create(makeInterval(segment.begin, interval.begin, segment.type));
 
     }
-    solution.create.push(
-        makeInterval(segment.end, interval.end, interval.type)
-      );
+
+    create(makeInterval(segment.end, interval.end, interval.type));
+
     break;
+
   default:
     throw new Error({ message: `INVALID CONFLICT NAME: ${name}` });
 
   }
 
   return solution;
+
+}
+
+function makeCreateFunction (array) {
+
+  return function create (...interval) {
+
+    array.push(...interval);
+
+  };
+
+}
+
+function makeInsertFunction (array, execute) {
+
+  return function insert (...interval) {
+
+    if (execute) {
+
+      array.push(...interval);
+
+    }
+
+  };
 
 }

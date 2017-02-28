@@ -4,12 +4,12 @@ import solve from './solver';
 import test from './tester';
 import weld from './welder';
 
-export default function intalg (obj) {
+export default function intalg (
+  { intervals = [], ruler = [], preserve = [], fail = [] }
+) {
 
-  const conflicts = obj.conflicts || [];
-
-  const intervals = process(obj.intervals);
-  let ruler = process(obj.ruler, true);
+  intervals = process(intervals);
+  ruler = process(ruler, true);
 
   if (intervals.length === 0) {
 
@@ -19,7 +19,7 @@ export default function intalg (obj) {
 
     });
 
-    return { ruler: process(weld({ ruler })), conflicts };
+    return { ruler: process(weld({ ruler })) };
 
   }
 
@@ -29,18 +29,20 @@ export default function intalg (obj) {
   ruler.some(function (segment) {
 
     conflict = test({ interval, segment });
-    if (conflict) {
 
-      conflicts.push(conflict);
+    if (fail.includes(segment.type)) {
+
+      throw new Error(`Failed on ${segment.type}!`);
 
     }
+
     return conflict;
 
   });
 
   if (conflict) {
 
-    const solution = solve(conflict);
+    const solution = solve(conflict, preserve);
     ruler = apply({ solution, ruler });
     intervals.unshift(...solution.create);
 
@@ -50,6 +52,6 @@ export default function intalg (obj) {
 
   }
 
-  return intalg({ intervals, ruler, conflicts });
+  return intalg({ intervals, ruler, preserve, fail });
 
 }

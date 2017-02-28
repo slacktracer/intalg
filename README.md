@@ -1,3 +1,79 @@
+#### UPDATE (2017-02-28):
+
+- Added type preservation. Selected types won't be touched.
+
+The test:
+
+```
+test('preserve type', t => {
+
+  const ruler = [
+    { begin: 1, end: 15, type: 'free' },
+    { begin: 20, end: 30, type: 'preserved' },
+    { begin: 30, end: 40, type: 'free' },
+    { begin: 40, end: 45, type: 'free' }
+  ];
+
+  const intervals = [ { begin: 13, end: 33, type: 'used' } ];
+
+  const expectedResult = [
+    { begin: 1, end: 13, type: 'free' },
+    { begin: 13, end: 20, type: 'used' },
+    { begin: 20, end: 30, type: 'preserved' },
+    { begin: 30, end: 33, type: 'used' },
+    { begin: 33, end: 45, type: 'free' }
+  ];
+
+  const { ruler: result } = intalg({
+    intervals,
+    ruler,
+    preserve: [ 'preserved' ]
+  });
+  t.deepEqual(result, expectedResult, 'preserving type is not working');
+
+});
+
+```
+
+- Added "fail on type". If there is a conflict with a "failing type" intalg throws.
+
+The test:
+
+```
+test('fail on type', t => {
+
+  const ruler = [
+    { begin: 1, end: 15, type: 'free' },
+    { begin: 20, end: 30, type: 'used' },
+    { begin: 30, end: 40, type: 'free' },
+    { begin: 40, end: 45, type: 'free' }
+  ];
+
+  const intervals = [ { begin: 13, end: 33, type: 'some other type' } ];
+
+  const error = t.throws(function () {
+
+    intalg({
+      intervals,
+      ruler,
+      fail: [ 'used' ]
+    });
+
+  });
+
+  t.is(error.message, 'Failed on used!');
+
+});
+
+```
+
+TODO:
+
+- Create an API.md.
+- Decide on a final API for 1.0. (intalg(), intalg.testSomething(), intalg.is(interval, type)?)
+
+___
+
 It's like a flat interval tree! (_What?_)
 
 ## "SHOW ME WHAT YOU GOT!"
