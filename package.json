@@ -10,7 +10,7 @@
     "intalg.umd.js.map",
     "intalg.umd.min.js",
     "intalg.umd.min.js.map",
-    "source",
+    "source"
   ],
   "devDependencies": {
     "ava": "^0.18.1",
