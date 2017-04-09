@@ -1,10 +1,17 @@
 {
   "name": "intalg",
-  "version": "0.9.1",
+  "version": "0.10.1",
   "description": "",
-  "main": "dist/intalg.js",
+  "main": "intalg.umd.min.js",
   "author": "slacktracer",
   "license": "MIT",
+  "files": [
+    "intalg.umd.js",
+    "intalg.umd.js.map",
+    "intalg.umd.min.js",
+    "intalg.umd.min.js.map",
+    "source",
+  ],
   "devDependencies": {
     "ava": "^0.18.1",
     "babel-cli": "^6.23.0",
@@ -24,6 +31,6 @@
   "dependencies": {},
   "scripts": {
     "build": "gulp",
-    "test": "ava tests/main.js --verbose"
+    "test": "ava specs/main.js --verbose"
   }
 }

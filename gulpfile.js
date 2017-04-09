@@ -25,7 +25,7 @@ gulp.task('rollup-then-babel', function () {
     cache = bundle;
 
     return bundle.write({
-      dest: 'dist/intalg.js',
+      dest: 'intalg.umd.js',
       format: 'umd',
       moduleName: 'intalg',
       sourceMap: true
@@ -38,12 +38,12 @@ gulp.task('rollup-then-babel', function () {
 gulp.task('process', [ 'rollup-then-babel' ], function () {
 
   gulp
-    .src('dist/intalg.js')
+    .src('intalg.umd.js')
     .pipe(sourcemaps.init({ loadMaps: true }))
     .pipe(uglify())
-    .pipe(rename('intalg.min.js'))
+    .pipe(rename('intalg.umd.min.js'))
     .pipe(sourcemaps.write('.'))
-    .pipe(gulp.dest('dist'));
+    .pipe(gulp.dest(''));
 
 });
 
@@ -51,6 +51,6 @@ gulp.watch('src/**/*.js', [ 'default' ]);
 
 gulp.task('default', [ 'process' ], function () {
 
-  gulp.src('tests/main.js').pipe(ava({ verbose: true }));
+  gulp.src('specs/main.js').pipe(ava({ verbose: true }));
 
 });
