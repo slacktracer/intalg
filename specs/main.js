@@ -62,7 +62,7 @@ const data = {
   }
 };
 
-import intalg from '../dist/intalg';
+import intalg from '../intalg.umd';
 import test from 'ava';
 
 test('solve for equal', t => {
