@@ -47,13 +47,7 @@ gulp.task('process', [ 'rollup-then-babel' ], function () {
 
 });
 
-gulp.watch('src/**/*.js', [ 'default' ]).on('change', function (event) {
-
-  console.log(
-    'File ' + event.path + ' was ' + event.type + ', running tasks...'
-  );
-
-});
+gulp.watch('src/**/*.js', [ 'default' ]);
 
 gulp.task('default', [ 'process' ], function () {
 

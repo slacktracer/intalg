@@ -4,6 +4,8 @@ import solve from './solver';
 import test from './tester';
 import weld from './welder';
 
+export { test };
+
 export default function intalg (
   { intervals = [], ruler = [], preserve = [], fail = [] }
 ) {

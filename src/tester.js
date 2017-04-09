@@ -45,7 +45,7 @@ const about = {
   }
 };
 
-const tests = {
+export const tests = {
   equal (interval, segment) {
 
     return interval.begin === segment.begin && interval.end === segment.end;
